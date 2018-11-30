@@ -13,7 +13,14 @@
 
 1. Upload files to your Magento 2.x installation root.
 
-2. Go to your Magento administration. System 
+2. Run the following commands to install module:
+   ```bash
+    bin/magento module:enable Credius_PaymentGateway --clear-static-content
+    bin/magento setup:upgrade
+    bin/magento setup:static-content:deploy -f
+    bin/magento cache:clean 
+     ```
+3. Go to your Magento administration. System 
     
     -&gt; Configuration 
     
