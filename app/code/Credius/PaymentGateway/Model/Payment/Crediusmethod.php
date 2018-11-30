@@ -1,12 +1,11 @@
 <?php
 /**
- * A Magento 2 module named Credius/PaymentGateway
- * Copyright (C) 2017 Credius
- *
- * This file included in Credius/PaymentGateway is licensed under OSL 3.0
- *
- * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * Please see LICENSE.txt for the full text of the OSL 3.0 license
+ * Plugin Name: Credius
+ * Plugin URI: https://www.credius.ro/
+ * Description: Magento 2.x personal loans integration via Credius.
+ * Version: 1.0.0
+ * Author: Alexandru Neamtu
+ * Author URI: http://github.com/alexneamtu
  */
 
 namespace Credius\PaymentGateway\Model\Payment;

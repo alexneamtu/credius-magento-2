@@ -1,4 +1,11 @@
 <?xml version="1.0" ?>
+<!--Plugin Name: Credius-->
+<!--Plugin URI: https://www.credius.ro/-->
+<!--Description: Magento 2.x personal loans integration via Credius.-->
+<!--Version: 1.0.0-->
+<!--Author: Alexandru Neamtu-->
+<!--Author URI: http://github.com/alexneamtu-->
+
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
 	<module name="Credius_PaymentGateway" setup_version="1.0.0"/>
 </config>
