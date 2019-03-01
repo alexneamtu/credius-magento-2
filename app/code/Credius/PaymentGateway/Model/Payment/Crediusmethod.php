@@ -18,6 +18,10 @@ class Crediusmethod extends \Magento\Payment\Model\Method\AbstractMethod
     public function isAvailable(
         \Magento\Quote\Api\Data\CartInterface $quote = null
     ) {
+        $apiUrl = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/api_url',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
         $partnerCode = $this->_scopeConfig->getValue(
             'payment/crediusmethod/partner_code',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
@@ -30,7 +34,7 @@ class Crediusmethod extends \Magento\Payment\Model\Method\AbstractMethod
             'payment/crediusmethod/public_key',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
-        if (!$partnerCode || !$apiKey || !$publicKey) {
+        if (!$apiUrl || !$partnerCode || !$apiKey || !$publicKey) {
             return false;
         }
         return parent::isAvailable($quote);

@@ -65,6 +65,7 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
+        $apiUrl = $this->scopeConfig->getValue('payment/crediusmethod/api_url', ScopeInterface::SCOPE_STORE);
         $partnerCode = $this->scopeConfig->getValue('payment/crediusmethod/partner_code', ScopeInterface::SCOPE_STORE);
         $apiKey = $this->scopeConfig->getValue('payment/crediusmethod/api_key', ScopeInterface::SCOPE_STORE);
         $publicKey = $this->scopeConfig->getValue('payment/crediusmethod/public_key', ScopeInterface::SCOPE_STORE);
@@ -118,7 +119,7 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $cartDetails = array(
-            "action" => 'https://partnershopqa.credius.ro/' . $partnerCode,
+            "action" => rtrim($apiUrl, '/') . '/' . $partnerCode,
             "token" => $token,
             "total_amount" => strval(floatval($order->getTotalDue())),
             "products" => $products,

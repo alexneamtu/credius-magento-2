@@ -25,13 +25,16 @@
 				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
 					<label>Sort Order</label>
 				</field>
-				<field id="partner_code" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+				<field id="api_url" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+					<label>API Url</label>
+				</field>
+				<field id="partner_code" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
 					<label>Partner Code</label>
 				</field>
-				<field id="api_key" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+				<field id="api_key" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
 					<label>API Key</label>
 				</field>
-                <field id="public_key" translate="label" type="textarea" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="public_key" translate="label" type="textarea" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Public Key</label>
                 </field>
 			</group>
