@@ -102,7 +102,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $products[] = array(
                 'name' => $item->getName(),
                 'quantity' => (int)$item->getQtyOrdered(),
-                'value' => $item->getPrice(),
+                'value' => $item->getTaxAmount() + $item->getPrice(),
                 'code' => $item->getSku(),
                 'image' => $product->getData('small_image') ? $base_url . 'pub/media/catalog/product' . $product->getData('small_image') : ''
             );
@@ -112,7 +112,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $products[] = array(
                 'name' => 'Shipping',
                 'quantity' => 1,
-                'value' => $order->getShippingAmount(),
+                'value' => $order->getShippingTaxAmount() + $order->getShippingAmount(),
                 'code' => 'shipping',
                 'image' => ''
             );
