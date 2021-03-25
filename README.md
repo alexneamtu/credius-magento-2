@@ -23,10 +23,10 @@
  
     bin/magento cache:clean 
 ```
-3. Go to your Magento administration. System 
-    
-    -> Configuration 
-    
+3. Go to your Magento dashboard. 
+    -> Stores     
+    -> Configuration     
+    -> Sales    
     -> Payment Methods
 
 3. Find Credius & fill in your Product Code, API Key and Public Key. 
