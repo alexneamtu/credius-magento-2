@@ -24,6 +24,7 @@
     bin/magento cache:clean 
 ```
 3. Go to your Magento dashboard. 
+
     -> Stores     
     -> Configuration     
     -> Sales    
