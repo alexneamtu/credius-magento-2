@@ -39,5 +39,5 @@
 
 ##  Magento Support
     
-    * [Homepage](http://magento.com/)
-    * [Support](http://magento.com/help/overview)
+  * [Homepage](http://magento.com/)
+  * [Support](http://magento.com/help/overview)
