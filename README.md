@@ -18,8 +18,6 @@
     bin/magento module:enable Credius_PaymentGateway --clear-static-content
  
     bin/magento setup:upgrade
-    
-    bin/magento setup:di:compile
  
     bin/magento setup:static-content:deploy -f
  
