@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Plugin Name: Credius-->
+<!--Plugin URI: https://www.credius.ro/-->
+<!--Description: Magento 2.x personal loans integration via Credius.-->
+<!--Version: 1.0.0-->
+<!--Author: Alexandru Neamtu-->
+<!--Author URI: http://github.com/alexneamtu-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="credius_gateway_applicant_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\ApplicantTypesProvider</item>
+                <item name="credius_gateway_loan_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\LoanTypesProvider</item>
+                <item name="credius_gateway_request_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\RequestTypesProvider</item>
+<!--                <item name="credius_gateway_request_source_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\RequestSourceTypesProvider</item>-->
+            </argument>
+        </arguments>
+    </type>
+</config>
