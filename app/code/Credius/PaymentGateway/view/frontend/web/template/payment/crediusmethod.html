@@ -15,20 +15,14 @@
 			<span class="brandImages">
 				<img data-bind="attr: {src: getPaymentImage()[0], alt: $t('credius')}"
 					class="payment-icon"/>
-			</span> 
+			</span>
 		</label>
     </div>
     <div class="payment-method-content">
-        <!-- ko foreach: getRegion('messages') -->
-        <!-- ko template: getTemplate() --><!-- /ko -->
-        <!--/ko-->
         <div class="payment-method-redirect-message">
             <p>After clicking "Place order", you will be redirected to Credius to complete your purchase.</p>
         </div>
         <div class="checkout-agreements-block">
-            <!-- ko foreach: $parent.getRegion('before-place-order') -->
-                <!-- ko template: getTemplate() --><!-- /ko -->
-            <!--/ko-->
         </div>
         <div class="actions-toolbar">
             <div class="primary">
@@ -47,4 +41,3 @@
         </div>
     </div>
 </div>
-        

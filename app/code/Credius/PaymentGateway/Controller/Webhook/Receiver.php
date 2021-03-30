@@ -10,24 +10,28 @@
 
 namespace Credius\PaymentGateway\Controller\Webhook;
 
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Filesystem\Io\File;
-use Magento\Framework\Api\SearchCriteriaBuilder;
-use Magento\Framework\Registry;
-use Magento\Sales\Model\Order\Status\HistoryFactory;
-use Magento\Sales\Api\OrderStatusHistoryRepositoryInterface;
-use Magento\Sales\Model\Service\InvoiceService;
+use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\Request\InvalidRequestException;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\DB\Transaction;
-use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
-use Magento\Sales\Api\InvoiceRepositoryInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Filesystem\Io\File;
+use Magento\Framework\Registry;
+use Magento\Sales\Api\InvoiceRepositoryInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Api\OrderStatusHistoryRepositoryInterface;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
+use Magento\Sales\Model\Order\Status\HistoryFactory;
+use Magento\Sales\Model\Service\InvoiceService;
 use Psr\Log\LoggerInterface;
 
-class Receiver extends Action
+class Receiver extends Action implements CsrfAwareActionInterface
 {
     /**
      * @var InvoiceSender
@@ -58,7 +62,6 @@ class Receiver extends Action
      * @var File
      */
     private $file;
-
 
     /**
      * @var SearchCriteriaBuilder
@@ -95,9 +98,8 @@ class Receiver extends Action
      */
     private $invoiceRepository;
 
-    /** @var  \Magento\Sales\Model\Order */
+    /** @var  Order */
     private $order;
-
 
     public function __construct(
         Context $context,
@@ -115,7 +117,6 @@ class Receiver extends Action
         InvoiceSender $invoiceSender,
         InvoiceRepositoryInterface $invoiceRepository
     ) {
-        parent::__construct($context);
         $this->orderRepository = $order;
         $this->scopeConfig = $scopeConfig;
         $this->jsonResultFactory = $jsonResultFactory;
@@ -137,45 +138,42 @@ class Receiver extends Action
      */
     public function execute()
     {
-
         $response = $this->file->read('php://input');
-        error_log($response);
 
         if (!empty($response)) {
-            $decoded_response = json_decode($response, true);
+            $decodedResponse = json_decode($response, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                parse_str($response, $decoded_response);
+                parse_str($response, $decodedResponse);
             }
 
             if (
-                !is_array($decoded_response) ||
-                !isset($decoded_response['partner_id']) ||
-                !isset($decoded_response['order_id']) ||
-                !isset($decoded_response['status_id'])
+                !is_array($decodedResponse) ||
+                !isset($decodedResponse['OrderId']) ||
+                !isset($decodedResponse['StatusId'])
             ) {
                 $this->logger->critical('Credius - Invalid notification format: ' . $response);
                 echo "1";
                 exit();
             }
-
         }
 
-        $order = $this->getOrder($decoded_response['order_id']);
+        $order = $this->getOrder($decodedResponse['OrderId']);
         if (!$order) {
-            $this->logger->critical('Credius - Invalid notification with orderId: ' . $decoded_response['order_id']);
+            $this->logger->critical('Credius - Invalid notification with orderId: ' . $decodedResponse['OrderId']);
             echo "2";
             exit();
         }
 
-
-        switch ($decoded_response['status_id']) {
+        switch ($decodedResponse['StatusId']) {
             case 1:
                 $history = $this->historyFactory->create();
-                $history->setParentId($decoded_response['order_id'])->setComment('Credius credit request submitted.')
+                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request submitted.')
                     ->setEntityName('order')
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_HOLDED);
+                    ->setStatus(Order::STATE_PENDING_PAYMENT);
                 $this->historyRepository->save($history);
-                $this->order->hold();
+                $this->order
+                    ->setState(Order::STATE_PENDING_PAYMENT, true)
+                    ->setStatus(Order::STATE_PENDING_PAYMENT, true);
                 $this->orderRepository->save($this->order);
                 break;
             case 2:
@@ -193,37 +191,61 @@ class Receiver extends Action
 
                 $this->orderRepository->save($this->order);
                 $history = $this->historyFactory->create();
-                $history->setParentId($decoded_response['order_id'])->setComment('Credius credit request approved.')
+                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request approved.')
                     ->setEntityName('order')
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE);
+                    ->setStatus(Order::STATE_PROCESSING);
                 $this->historyRepository->save($history);
                 $this->order
-                    ->setState(\Magento\Sales\Model\Order::STATE_COMPLETE, true)
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_COMPLETE, true);
+                    ->setState(Order::STATE_PROCESSING, true)
+                    ->setStatus(Order::STATE_PROCESSING, true);
                 $this->orderRepository->save($this->order);
                 break;
             case 3:
                 $history = $this->historyFactory->create();
-                $history->setParentId($decoded_response['order_id'])->setComment('Credius credit request denied.')
+                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request denied.')
                     ->setEntityName('order')
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                    ->setStatus(Order::STATE_CANCELED);
                 $this->historyRepository->save($history);
                 $this->order->cancel();
                 $this->order
-                    ->setState(\Magento\Sales\Model\Order::STATE_CANCELED, true)
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED, true);
+                    ->setState(Order::STATE_CANCELED, true)
+                    ->setStatus(Order::STATE_CANCELED, true);
                 $this->orderRepository->save($this->order);
                 break;
             case 4:
+                $payment = $this->order->getPayment();
+                $payment->setShouldCloseParentTransaction(true);
+                $payment->setIsTransactionClosed(true);
+                $this->orderRepository->save($this->order);
+
+                $invoice = $this->invoiceService->prepareInvoice($this->order);
+                $invoice->register();
+                $this->invoiceRepository->save($invoice);
+                $transactionSave = $this->transaction->addObject($invoice)->addObject($invoice->getOrder());
+                $transactionSave->save();
+                $this->invoiceSender->send($invoice);
+
+                $this->orderRepository->save($this->order);
                 $history = $this->historyFactory->create();
-                $history->setParentId($decoded_response['order_id'])->setComment('Credius credit request canceled.')
+                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request completed.')
                     ->setEntityName('order')
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
+                    ->setStatus(Order::STATE_COMPLETE);
+                $this->historyRepository->save($history);
+                $this->order
+                    ->setState(Order::STATE_COMPLETE, true)
+                    ->setStatus(Order::STATE_COMPLETE, true);
+                $this->orderRepository->save($this->order);
+                break;
+            case 5:
+                $history = $this->historyFactory->create();
+                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request canceled by the client.')
+                    ->setEntityName('order')
+                    ->setStatus(Order::STATE_CANCELED);
                 $this->historyRepository->save($history);
                 $this->order->cancel();
                 $this->order
-                    ->setState(\Magento\Sales\Model\Order::STATE_CANCELED, true)
-                    ->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED, true);
+                    ->setState(Order::STATE_CANCELED, true)
+                    ->setStatus(Order::STATE_CANCELED, true);
                 $this->orderRepository->save($this->order);
                 break;
         }
@@ -233,7 +255,6 @@ class Receiver extends Action
         $result = $this->jsonResultFactory->create();
         return $result;
     }
-
 
     /**
      * @param $event
@@ -246,5 +267,15 @@ class Receiver extends Action
         $orderList = $this->orderRepository->getList($searchCriteria)->getItems();
         $this->order = $order = reset($orderList) ? reset($orderList) : null;
         return $order;
+    }
+
+    public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
+    {
+        return null;
+    }
+
+    public function validateForCsrf(RequestInterface $request): ?bool
+    {
+        return true;
     }
 }

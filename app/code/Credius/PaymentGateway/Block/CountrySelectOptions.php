@@ -10,20 +10,35 @@
 
 namespace Credius\PaymentGateway\Block;
 
-class CountrySelectOptions extends \Magento\Config\Block\System\Config\Form\Field
-{
-    protected $storeManager;
 
+use Magento\Backend\Block\Template\Context;
+use Magento\Config\Block\System\Config\Form\Field;
+use Magento\Framework\Data\Form\Element\AbstractElement;
+use Magento\Store\Model\StoreManagerInterface;
+
+class CountrySelectOptions extends Field
+{
+    /**
+     * @var StoreManagerInterface
+     */
+    protected StoreManagerInterface $storeManager;
+
+    /**
+     * CountrySelectOptions constructor.
+     * @param Context $context
+     * @param StoreManagerInterface $storeManager
+     * @param array $data
+     */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        Context $context,
+        StoreManagerInterface $storeManager,
         array $data = []
     ) {
         $this->storeManager = $storeManager;
         parent::__construct($context, $data);
     }
 
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+    protected function _getElementHtml(AbstractElement $element): string
     {
         $countryValue = $element->getData('value');
 

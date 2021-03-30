@@ -2,7 +2,7 @@
 <!--Plugin Name: Credius-->
 <!--Plugin URI: https://www.credius.ro/-->
 <!--Description: Magento 2.x personal loans integration via Credius.-->
-<!--Version: 2.0.0-->
+<!--Version: 1.0.0-->
 <!--Author: Alexandru Neamtu-->
 <!--Author URI: http://github.com/alexneamtu-->
 
@@ -11,33 +11,120 @@
 		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
 			<group id="crediusmethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
 				<label>Credius Commerce</label>
-				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
-					<label>Enabled</label>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-				</field>
-				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
-					<label>Title</label>
-				</field>
-				<field id="order_status" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
-					<label>New Order Status</label>
-					<source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
-				</field>
-				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
-					<label>Sort Order</label>
-				</field>
-				<field id="api_url" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
-					<label>API Url</label>
-				</field>
-				<field id="partner_code" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
-					<label>Partner Code</label>
-				</field>
-				<field id="api_key" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
-					<label>API Key</label>
-				</field>
-                <field id="public_key" translate="label" type="textarea" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Public Key</label>
-                </field>
-			</group>
+                <group id="general_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
+                    <label>General Settings</label>
+                    <attribute type="expanded">1</attribute>
+                    <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                        <label>Enabled</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+                        <label>Title</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="order_status" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+                        <label>New Order Status</label>
+                        <source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
+                        <label>Sort Order</label>
+                    </field>
+                </group>
+                <group id="api_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2000" translate="label">
+                    <label>API Settings</label>
+                    <field id="api_key" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>API Key</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="callback_url" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Callback Url</label>
+                        <validate>required-entry validate-url</validate>
+                    </field>
+                </group>
+                <group id="store_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3000" translate="label">
+                    <label>Store Settings</label>
+                    <field id="store_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>ID</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="store_cui" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>CUI</label>
+                        <validate>required-entry</validate>
+                    </field>
+                </group>
+                <group id="location_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="4000" translate="label">
+                    <label>Location Settings</label>
+                    <field id="location_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>ID</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Name</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_country" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Country</label>
+                        <validate>required-entry</validate>
+                        <frontend_model>Credius\PaymentGateway\Block\CountrySelectOptions</frontend_model>
+                    </field>
+                    <field id="location_district" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>District</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_city" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>City</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_street" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Street</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_street_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Street Number</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_building_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Building Number</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_stair_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Stair Number</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_floor_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Floor Number</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="location_apartment_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Apartment Number</label>
+                        <validate>required-entry</validate>
+                    </field>
+                </group>
+                <group id="user_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5000" translate="label">
+                    <label>User Settings</label>
+                    <field id="user_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>ID</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="user_cnp" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>CNP</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="user_first_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>First Name</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="user_last_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Last Name</label>
+                        <validate>required-entry</validate>
+                    </field>
+                    <field id="user_identity_card" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                        <label>Identity Card</label>
+                        <validate>required-entry</validate>
+                    </field>
+                </group>
+            </group>
 		</section>
 	</system>
 </config>

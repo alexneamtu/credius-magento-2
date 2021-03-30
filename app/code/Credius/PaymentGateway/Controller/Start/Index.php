@@ -9,123 +9,133 @@
  */
 
 namespace Credius\PaymentGateway\Controller\Start;
-use Magento\Store\Model\ScopeInterface;
 
-class Index extends \Magento\Framework\App\Action\Action
+use Magento\Catalog\Api\ProductRepositoryInterfaceFactory;
+use Magento\Checkout\Model\Session;
+use Magento\Checkout\Model\Session\Proxy;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ActionInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\UrlInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
+
+class Index implements ActionInterface
 {
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var string
      */
-    private $checkoutSession;
-    /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory
-     */
-    private $resultJsonFactory;
-    /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $scopeConfig;
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterfaceFactory
-     */
-    protected $productRepositoryFactory;
+    private const INITIATE_URL = 'https://testpartener.credius.ro';
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var Session
      */
-    protected $storeManagerInterface;
+    private Session $checkoutSession;
+    /**
+     * @var JsonFactory
+     */
+    private JsonFactory $resultJsonFactory;
+    /**
+     * @var ScopeConfigInterface
+     */
+    private ScopeConfigInterface $scopeConfig;
+    /**
+     * @var ProductRepositoryInterfaceFactory
+     */
+    protected ProductRepositoryInterfaceFactory $productRepositoryFactory;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected StoreManagerInterface $storeManagerInterface;
+
+    /**
+     * @var UrlInterface
+     */
+    private UrlInterface $_url;
 
     /**
      * Index constructor.
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Checkout\Model\Session\Proxy $checkoutSession
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Catalog\Api\ProductRepositoryInterfaceFactory $productRepositoryFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param Context $context
+     * @param Proxy $checkoutSession
+     * @param JsonFactory $resultJsonFactory
+     * @param ScopeConfigInterface $scopeConfig
+     * @param ProductRepositoryInterfaceFactory $productRepositoryFactory
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Checkout\Model\Session\Proxy $checkoutSession,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Catalog\Api\ProductRepositoryInterfaceFactory $productRepositoryFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        Context $context,
+        Proxy $checkoutSession,
+        JsonFactory $resultJsonFactory,
+        ScopeConfigInterface $scopeConfig,
+        ProductRepositoryInterfaceFactory $productRepositoryFactory,
+        StoreManagerInterface $storeManager
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->scopeConfig = $scopeConfig;
         $this->productRepositoryFactory = $productRepositoryFactory;
         $this->storeManagerInterface = $storeManager;
-        parent::__construct($context);
-
+        $this->_url = $context->getUrl();
     }
     /**
      * Start checkout by Credius preparing the submit form data.
      */
-    public function execute()
+    public function execute(): Json
     {
-        $apiUrl = $this->scopeConfig->getValue('payment/crediusmethod/api_url', ScopeInterface::SCOPE_STORE);
-        $partnerCode = $this->scopeConfig->getValue('payment/crediusmethod/partner_code', ScopeInterface::SCOPE_STORE);
-        $apiKey = $this->scopeConfig->getValue('payment/crediusmethod/api_key', ScopeInterface::SCOPE_STORE);
-        $publicKey = $this->scopeConfig->getValue('payment/crediusmethod/public_key', ScopeInterface::SCOPE_STORE);
-
-        $base_url = $this->storeManagerInterface->getStore()->getBaseUrl(
-            \Magento\Framework\UrlInterface::URL_TYPE_WEB,
-            true
-        );
-
+        $apiKey = $this->scopeConfig->getValue('payment/crediusmethod/api_settings/api_key', ScopeInterface::SCOPE_WEBSITE);
+        $storeId = $this->scopeConfig->getValue('payment/crediusmethod/store_settings/store_id', ScopeInterface::SCOPE_WEBSITE);
+        $locationId = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_id', ScopeInterface::SCOPE_WEBSITE);
+        $userId = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_id', ScopeInterface::SCOPE_WEBSITE);
 
         $order = $this->checkoutSession->getLastRealOrder();
 
-        $clientDetails = array(
-            "api_key" => $apiKey,
-            "client_firstname" => $order->getBillingAddress()->getFirstName(),
-            "client_lastname" => $order->getBillingAddress()->getLastname(),
-            "client_email" => $order->getCustomerEmail(),
-            "client_phone" => $order->getBillingAddress()->getTelephone(),
-            "order_id" => $order->getIncrementId(),
-            "nonce" => time(),
-            "secure_callback" => false,
-            "callback_status_url" => $this->_url->getUrl("credius/webhook/receiver"),
-        );
-
-        openssl_public_encrypt(json_encode($clientDetails), $rawToken, $publicKey);
-
-        $token = base64_encode($rawToken);
-
-        $products = array();
+        $products = [];
         $items = $order->getAllItems();
         foreach ($items as $item) {
-            $product = $this->productRepositoryFactory->create()->getById($item->getProductId());
-
-            $products[] = array(
+            $products[] = [
                 'name' => $item->getName(),
+                'code' => $item->getSku(),
                 'quantity' => (int)$item->getQtyOrdered(),
                 'value' => $item->getPrice(),
-                'code' => $item->getSku(),
-                'image' => $product->getData('small_image') ? $base_url . 'pub/media/catalog/product' . $product->getData('small_image') : ''
-            );
+            ];
         }
 
         if ($order->getShippingAmount()) {
-            $products[] = array(
+            $products[] = [
                 'name' => 'Shipping',
                 'quantity' => 1,
                 'value' => $order->getShippingAmount(),
                 'code' => 'shipping',
-                'image' => ''
-            );
+            ];
         }
 
-        $cartDetails = array(
-            "action" => rtrim($apiUrl, '/') . '/' . $partnerCode,
-            "token" => $token,
-            "total_amount" => strval(floatval($order->getTotalDue())),
-            "products" => $products,
-            "callback_return_url_success" => $this->_url->getUrl('checkout/onepage/success'),
-            "callback_return_url_rejected" => $this->_url->getUrl('checkout/cart')
-        );
+        $cartDetails = [
+            'action' => rtrim(self::INITIATE_URL, '/'),
+            'ApiKey' => $apiKey,
+            'RequestTypeId' => 1,
+            'ApplicantTypeId' => 1,
+            'RequestSourceId' => 11,
+            'OrderID' => $order->getIncrementId(),
+            'StoreId' => $storeId,
+            'LocationId' => $locationId,
+            'UserId' => $userId,
+            'RequestData' => [
+                'FirstName' => $order->getBillingAddress()->getFirstName(),
+                'LastName' => $order->getBillingAddress()->getLastName(),
+                'CNP' => '1830803070014', // TODO Check this
+                'ClientPhoneNumber' => $order->getBillingAddress()->getTelephone(),
+                'ClientEmail' => $order->getCustomerEmail(),
+                'LoanTypeId' => 1,
+            ],
+            'RequestGoods' => $products,
+            'callback_return_url' => $this->_url->getUrl('checkout/onepage/success'),
+//            'callback_return_url_success' => $this->_url->getUrl('checkout/onepage/success'),
+//            'callback_return_url_rejected' => $this->_url->getUrl('checkout/cart'),
+
+        ];
 
         $result = $this->resultJsonFactory->create();
         return $result->setData($cartDetails);

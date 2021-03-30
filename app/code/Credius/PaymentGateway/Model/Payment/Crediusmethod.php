@@ -10,31 +10,122 @@
 
 namespace Credius\PaymentGateway\Model\Payment;
 
-class Crediusmethod extends \Magento\Payment\Model\Method\AbstractMethod
+use Magento\Payment\Model\Method\AbstractMethod;
+use Magento\Quote\Api\Data\CartInterface;
+use Magento\Store\Model\ScopeInterface;
+
+class Crediusmethod extends AbstractMethod
 {
     protected $_code = "crediusmethod";
     protected $_isOffline = true;
 
     public function isAvailable(
-        \Magento\Quote\Api\Data\CartInterface $quote = null
+        CartInterface $quote = null
     ) {
-        $apiUrl = $this->_scopeConfig->getValue(
-            'payment/crediusmethod/api_url',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
-        $partnerCode = $this->_scopeConfig->getValue(
-            'payment/crediusmethod/partner_code',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
         $apiKey = $this->_scopeConfig->getValue(
-            'payment/crediusmethod/api_key',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            'payment/crediusmethod/api_settings/api_key',
+            ScopeInterface::SCOPE_WEBSITE
         );
-        $publicKey = $this->_scopeConfig->getValue(
-            'payment/crediusmethod/public_key',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        $callbackUrl = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/api_settings/callback_url',
+            ScopeInterface::SCOPE_WEBSITE
         );
-        if (!$apiUrl || !$partnerCode || !$apiKey || !$publicKey) {
+        $storeId = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/store_settings/store_id',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $storeCui = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/store_settings/store_cui',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationId = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_id',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationName = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_name',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationCountry = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_country',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationDistrict = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_district',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationCity = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_city',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationStreet = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_street',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationStreetNumber = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_street_number',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationBuildingNumber = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_building_number',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationStairNumber = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_stair_number',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationFloorNumber = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_floor_number',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $locationApartmanetNumber = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/location_settings/location_apartment_number',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $userId = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/user_settings/user_id',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $userCnp = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/user_settings/user_cnp',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $userFirstName = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/user_settings/user_first_name',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $userLastName = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/user_settings/user_last_name',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+        $userIdentityCard = $this->_scopeConfig->getValue(
+            'payment/crediusmethod/user_settings/user_identity_card',
+            ScopeInterface::SCOPE_WEBSITE
+        );
+
+
+        if (
+            !$apiKey ||
+            !$callbackUrl ||
+            !$storeId ||
+            !$storeCui ||
+            !$locationId ||
+            !$locationName ||
+            !$locationCountry ||
+            !$locationDistrict ||
+            !$locationCity ||
+            !$locationStreet ||
+            !$locationStreetNumber ||
+            !$locationBuildingNumber ||
+            !$locationStairNumber ||
+            !$locationFloorNumber ||
+            !$locationApartmanetNumber ||
+            !$userId ||
+            !$userCnp ||
+            !$userFirstName ||
+            !$userLastName ||
+            !$userIdentityCard
+        ) {
             return false;
         }
         return parent::isAvailable($quote);

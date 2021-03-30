@@ -30,20 +30,29 @@ define(
                                 if ( typeof value != 'object') {
                                     html += '  <input type="hidden" name="' + name + '" value="' + value + '" />';
                                 } else {
-                                    value.forEach(function(element, index) {
-                                        for (const fieldKey in element) {
-                                            if (element.hasOwnProperty(fieldKey)) {
-                                                const fieldValue = element[fieldKey];
-                                                html += ' <input type="hidden" name="' + name + '[' + index + '][' + fieldKey + ']" value="' + fieldValue + '"/>';
+                                    if (Array.isArray(value)) {
+                                        value.forEach(function (element, index) {
+                                            for (const fieldKey in element) {
+                                                if (element.hasOwnProperty(fieldKey)) {
+                                                    const fieldValue = element[fieldKey];
+                                                    html += ' <input type="hidden" name="' + name + '[' + index + '][' + fieldKey + ']" value="' + fieldValue + '"/>';
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        for (const fieldKey in value) {
+                                            if (value.hasOwnProperty(fieldKey)) {
+                                                const fieldValue = value[fieldKey];
+                                                html += ' <input type="hidden" name="' + name + '[' + fieldKey + ']" value="' + fieldValue + '"/>';
                                             }
                                         }
-                                    });
+                                    }
                                 }
                             }
                         }
 
                         html += '</form>';
-
+                        debugger
                         $('#checkout-payment-method-load').after(html);
 
                         $('#credius').submit();
@@ -60,7 +69,7 @@ define(
 				    require.toUrl('Credius_PaymentGateway/images/credius.png'),
 				];
 				return custom_image;
-			}			
+			}
         });
     }
 );
