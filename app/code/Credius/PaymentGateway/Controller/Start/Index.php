@@ -125,7 +125,7 @@ class Index implements ActionInterface
             'RequestData' => [
                 'FirstName' => $order->getBillingAddress()->getFirstName(),
                 'LastName' => $order->getBillingAddress()->getLastName(),
-                'CNP' => '1830803070014', // TODO Check this
+//                'CNP' => '1830803070014', // TODO Check this
                 'ClientPhoneNumber' => $order->getBillingAddress()->getTelephone(),
                 'ClientEmail' => $order->getCustomerEmail(),
                 'LoanTypeId' => 1,
