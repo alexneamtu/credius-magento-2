@@ -32,7 +32,7 @@
     -> Sales    
     -> Payment Methods
 
-3. Find Credius & fill in your Product Code, API Key and Public Key. 
+4. Find Credius & setup the plugin using the API Key provided by Credius and the Callback Url as `<domain>/credius/webhook/receiver`
 
 #  Support
 
