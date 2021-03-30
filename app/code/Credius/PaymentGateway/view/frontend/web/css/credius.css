@@ -16,6 +16,11 @@
     align-items: center;
     margin-bottom: 15px;
 }
+
+.credius.payment-method-content {
+    display: none;
+}
+
 .credius .payment-method-redirect-message p{
     font-size: 14px;
     font-family: Roboto, sans-serif;
