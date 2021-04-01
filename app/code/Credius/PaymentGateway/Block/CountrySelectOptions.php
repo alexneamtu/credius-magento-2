@@ -52,10 +52,11 @@ class CountrySelectOptions extends Field
         $streetValue = $this->_scopeConfig->getValue($streetKey);
 
         $name = "groups[crediusmethod][groups][location_settings][fields][location_country][value]";
-        $countryId = "payment_us_crediusmethod_location_settings_location_country";
-        $districtId = "payment_us_crediusmethod_location_settings_location_district";
-        $cityId = "payment_us_crediusmethod_location_settings_location_city";
-        $streetId = "payment_us_crediusmethod_location_settings_location_street";
+        $countryId = "payment_crediusmethod_location_settings_location_country";
+        $countryName= "groups[crediusmethod][groups][location_settings][fields][location_country][value]";
+        $districtName = "groups[crediusmethod][groups][location_settings][fields][location_district][value]";
+        $cityName = "groups[crediusmethod][groups][location_settings][fields][location_city][value]";
+        $streetName = "groups[crediusmethod][groups][location_settings][fields][location_street][value]";
 
         $html = $this->getLayout()
             ->createBlock('Magento\Framework\View\Element\Html\Select')
@@ -69,10 +70,10 @@ class CountrySelectOptions extends Field
         $html .= '<script type="text/javascript">
            require(["jquery"], function ($) {
                 $(document).ready(function () {
-                    var countryElement = $("#' . $countryId . '");
-                    var districtElement = $("#' . $districtId . '");
-                    var cityElement = $("#' . $cityId . '");
-                    var streetElement = $("#' . $streetId . '");
+                    var countryElement = $("[name=\"' . $countryName . '\"]");
+                    var districtElement = $("[name=\"' . $districtName . '\"]");
+                    var cityElement = $("[name=\"' . $cityName . '\"]");
+                    var streetElement = $("[name=\"' . $streetName . '\"]");
 
                     var countryValue = "' . $countryValue . '";
                     var districtValue = "' . $districtValue . '";
@@ -83,7 +84,7 @@ class CountrySelectOptions extends Field
                         var options = $.map(
                             source,
                             function (element) {
-                                return $("<option/>").attr("value", element.Id).text(element.Name);
+                                return $("<option/>").attr("value", element.Id.toString()).text(element.Name);
                             },
                         );
                         var select = selectElement.empty().append(options);

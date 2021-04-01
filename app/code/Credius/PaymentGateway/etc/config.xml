@@ -10,13 +10,15 @@
 	<default>
 		<payment>
 			<crediusmethod>
-				<active>0</active>
-				<model>Credius\PaymentGateway\Model\Payment\Crediusmethod</model>
-				<order_status>pending</order_status>
-				<title>Credius</title>
-				<allowspecific>0</allowspecific>
+                <active>1</active>
+                <title>Credius</title>
+                <order_status>pending</order_status>
+                <model>CrediusPaymentGatewayFacade</model>
 				<group>offline</group>
-			</crediusmethod>
+                <can_use_internal>1</can_use_internal>
+                <can_use_checkout>1</can_use_checkout>
+                <is_offline>1</is_offline>
+            </crediusmethod>
 		</payment>
 	</default>
 </config>
