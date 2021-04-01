@@ -74,10 +74,10 @@ class CountrySelectOptions extends Field
                     var cityElement = $("#' . $cityId . '");
                     var streetElement = $("#' . $streetId . '");
 
-                    var countryValue = ' . $countryValue . ';
-                    var districtValue = ' . $districtValue . ';
-                    var cityValue = ' . $cityValue . ';
-                    var streetValue = ' . $streetValue . ';
+                    var countryValue = "' . $countryValue . '";
+                    var districtValue = "' . $districtValue . '";
+                    var cityValue = "' . $cityValue . '";
+                    var streetValue = "' . $streetValue . '";
 
                     function loadSelectOptions(source, selectElement, selectValue, triggerChange) {
                         var options = $.map(
