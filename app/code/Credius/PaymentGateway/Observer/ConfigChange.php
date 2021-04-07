@@ -72,7 +72,7 @@ class ConfigChange implements ObserverInterface
     {
         $response = $this->getResponse(['DataType' => 2, 'StoreId' => $storeId, 'StoreCUI' => $storeCui]);
         if (200 !== $response['status']) {
-            $match = (strcmp($response['response'], "Eroare: \nCUI-ul " . $storeCui . ' a fost deja inregistrat. Id-ul acestuia este: ' . $storeId));
+            $match = preg_match('/CUI\-ul ' . $storeCui . ' a fost deja inregistrat. Id\-ul acestuia este: ' . $storeId . '/', $response['response'], $matches);
             if (!$match) {
                 $this->messageManager->addErrorMessage($response['response']);
             }
@@ -80,6 +80,7 @@ class ConfigChange implements ObserverInterface
     }
 
     private function registerLocation(
+        $storeId,
         $locationId,
         $locationName,
         $locationCountry,
@@ -94,6 +95,7 @@ class ConfigChange implements ObserverInterface
     ) {
         $response = $this->getResponse([
             'DataType' => 3,
+            'StoreId' => $storeId,
             'LocationId' => $locationId,
             'LocationName' => $locationName,
             'CountryId' => $locationCountry,
@@ -107,7 +109,7 @@ class ConfigChange implements ObserverInterface
             'ApartmentNumber' => $locationApartmentNumber,
         ]);
         if (200 !== $response['status']) {
-            $match = (strcmp($response['response'], "Eroare: \nAceasta locatie a fost deja inregistrata"));
+            $match = preg_match('/Aceasta locatie a fost deja inregistrata/', $response['response'], $matches);
             if (!$match) {
                 $this->messageManager->addErrorMessage($response['response']);
             }
@@ -115,22 +117,36 @@ class ConfigChange implements ObserverInterface
     }
 
     private function registerUser(
+        $storeId,
+        $locationId,
         $userId,
         $userCnp,
         $userFirstName,
         $userLastName,
         $userIdentityCard
     ) {
-        $response = $this->getResponse([
+        error_log(print_r([
             'DataType' => 4,
+            'StoreId' => $storeId,
+            'LocationId' => $locationId,
             'UserId' => $userId,
             'UserCNP' => $userCnp,
             'UserFirstName' => $userFirstName,
             'UseLastName' => $userLastName,
             'UserIdentityCard' => $userIdentityCard,
+        ], 1));
+        $response = $this->getResponse([
+            'DataType' => 4,
+            'StoreId' => $storeId,
+            'LocationId' => $locationId,
+            'UserId' => $userId,
+            'UserCNP' => $userCnp,
+            'UserFirstName' => $userFirstName,
+            'UserLastName' => $userLastName,
+            'UserIdentityCard' => $userIdentityCard,
         ]);
         if (200 !== $response['status']) {
-            $match = (strcmp($response['response'], "Eroare: \nUserul a fost deja inregistrat"));
+            $match = preg_match('/Userul a fost deja inregistrat/', $response['response'], $matches);
             if (!$match) {
                 $this->messageManager->addErrorMessage($response['response']);
             }
@@ -168,6 +184,7 @@ class ConfigChange implements ObserverInterface
         $this->registerCallback($callbackUrl);
         $this->registerStore($storeId, $storeCui);
         $this->registerLocation(
+            $storeId,
             $locationId,
             $locationName,
             $locationCountry,
@@ -181,6 +198,8 @@ class ConfigChange implements ObserverInterface
             $locationApartmentNumber
         );
         $this->registerUser(
+            $storeId,
+            $locationId,
             $userId,
             $userCnp,
             $userFirstName,
