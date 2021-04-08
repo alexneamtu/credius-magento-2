@@ -130,6 +130,7 @@ class Receiver extends Action implements CsrfAwareActionInterface
         $this->transaction = $transaction;
         $this->invoiceSender = $invoiceSender;
         $this->invoiceRepository = $invoiceRepository;
+        parent::__construct($context);
     }
 
     /**
