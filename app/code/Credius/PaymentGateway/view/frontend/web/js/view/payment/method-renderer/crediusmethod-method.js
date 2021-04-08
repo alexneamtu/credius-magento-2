@@ -34,7 +34,7 @@ define(
                 this._super();
                 var self = this;
 
-                {
+                if (totals.getSegment('grand_total').value < 200 || totals.getSegment('grand_total').value > 20000) {
                     self.isDisplayMessage(true);
                 }
 
