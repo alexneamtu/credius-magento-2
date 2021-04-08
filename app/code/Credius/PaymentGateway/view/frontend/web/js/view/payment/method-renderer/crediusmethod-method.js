@@ -5,9 +5,20 @@ define(
         'mage/url',
         'Magento_Customer/js/customer-data',
         'Magento_Checkout/js/model/error-processor',
-        'Magento_Checkout/js/model/full-screen-loader'
+        'Magento_Checkout/js/model/full-screen-loader',
+        'Magento_Checkout/js/model/totals',
+        'ko'
     ],
-    function ($, Component, url, customerData, errorProcessor, fullScreenLoader) {
+    function (
+        $,
+        Component,
+        url,
+        customerData,
+        errorProcessor,
+        fullScreenLoader,
+        totals,
+        ko
+    ) {
         'use strict';
         return Component.extend({
             redirectAfterPlaceOrder: false,
@@ -17,6 +28,17 @@ define(
                 loanTypes: '',
                 requestTypes: '',
                 requestSourceTypes: ''
+            },
+            isDisplayMessage: ko.observable(false),
+            initialize: function () {
+                this._super();
+                var self = this;
+
+                {
+                    self.isDisplayMessage(true);
+                }
+
+                return this;
             },
             getMailingAddress: function () {
                 return window.checkoutConfig.payment.checkmo.mailingAddress;

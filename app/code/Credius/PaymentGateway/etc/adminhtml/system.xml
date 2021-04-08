@@ -10,7 +10,7 @@
 	<system>
 		<section id="payment" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
 			<group id="crediusmethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
-				<label>Credius Commerce</label>
+				<label>Credius Pay</label>
                 <group id="general_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
                     <label>General Settings</label>
                     <attribute type="expanded">1</attribute>

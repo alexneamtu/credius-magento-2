@@ -28,12 +28,20 @@
     text-align: center;
     line-height: 19px;
 }
+.credius .payment-method-total-error {
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
+    margin: 0;
+    text-align: center;
+    line-height: 19px;
+    color: #960f0f;
+    margin-bottom: 30px;
+}
 .credius .actions-toolbar {
     padding-top: 20px;
 }
-@media only screen and (max-width: 440px) {
-    .credius .payment-method .brandImages {
-        margin-left: 0;
-        float: right;
-    }
+.credius  .brandImages {
+    display: table;
+    margin: 0 auto;
 }
+

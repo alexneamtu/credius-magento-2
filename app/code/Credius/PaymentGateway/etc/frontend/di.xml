@@ -13,7 +13,6 @@
                 <item name="credius_gateway_applicant_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\ApplicantTypesProvider</item>
                 <item name="credius_gateway_loan_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\LoanTypesProvider</item>
                 <item name="credius_gateway_request_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\RequestTypesProvider</item>
-<!--                <item name="credius_gateway_request_source_types_config_provider" xsi:type="object">Credius\PaymentGateway\Model\Ui\RequestSourceTypesProvider</item>-->
             </argument>
         </arguments>
     </type>

@@ -10,18 +10,24 @@
                name="payment[method]"
                class="radio"
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
-        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span><a href="https://www.credius.ro/" target="_blank" rel="noopener"> (Learn More)</a>
-            <!-- CrediusMethod Logo -->
-			<span class="brandImages">
-				<img data-bind="attr: {src: getPaymentImage()[0], alt: $t('credius')}"
-					class="payment-icon"/>
-			</span>
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span data-bind="text: getTitle()"></span>
+            <a href="https://www.credius.ro/" target="_blank" rel="noopener"> (Learn More)</a>
 		</label>
     </div>
     <div class="payment-method-content credius">
+        <!-- CrediusMethod Logo -->
+        <span class="brandImages">
+            <img data-bind="attr: {src: getPaymentImage()[0], alt: $t('credius')}" class="payment-icon"/>
+        </span>
         <div class="payment-method-redirect-message">
-            <p>After clicking "Place order", you will be redirected to Credius to complete your purchase.</p>
+            <span data-bind="i18n: 'After clicking \'Place order\', you will be redirected to Credius to complete your purchase.'"/>
         </div>
+        <!-- ko if: (isDisplayMessage()) -->
+        <div class="payment-method-total-error">
+            <span data-bind="i18n: 'This payment is available only for order totals between 200RON and 20.000RON'"></span>
+        </div>
+        <!-- /ko -->
         <div class="field required">
             <label data-bind="attr: {for: getCode() + '_applicant_types'}" class="label">
                 <span><!-- ko i18n: 'Applicant Type'--><!-- /ko --></span>
