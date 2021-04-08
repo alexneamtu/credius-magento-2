@@ -149,8 +149,8 @@ class Receiver extends Action implements CsrfAwareActionInterface
 
             if (
                 !is_array($decodedResponse) ||
-                !isset($decodedResponse['OrderId']) ||
-                !isset($decodedResponse['StatusId'])
+                !isset($decodedResponse['OrderID']) ||
+                !isset($decodedResponse['StatusID'])
             ) {
                 $this->logger->critical('Credius - Invalid notification format: ' . $response);
                 echo "1";
@@ -158,17 +158,17 @@ class Receiver extends Action implements CsrfAwareActionInterface
             }
         }
 
-        $order = $this->getOrder($decodedResponse['OrderId']);
+        $order = $this->getOrder($decodedResponse['OrderID']);
         if (!$order) {
-            $this->logger->critical('Credius - Invalid notification with orderId: ' . $decodedResponse['OrderId']);
+            $this->logger->critical('Credius - Invalid notification with orderId: ' . $decodedResponse['OrderID']);
             echo "2";
             exit();
         }
 
-        switch ($decodedResponse['StatusId']) {
+        switch ($decodedResponse['StatusID']) {
             case 1:
                 $history = $this->historyFactory->create();
-                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request submitted.')
+                $history->setParentId($decodedResponse['OrderID'])->setComment('Credius credit request submitted.')
                     ->setEntityName('order')
                     ->setStatus(Order::STATE_PENDING_PAYMENT);
                 $this->historyRepository->save($history);
@@ -192,7 +192,7 @@ class Receiver extends Action implements CsrfAwareActionInterface
 
                 $this->orderRepository->save($this->order);
                 $history = $this->historyFactory->create();
-                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request approved.')
+                $history->setParentId($decodedResponse['OrderID'])->setComment('Credius credit request approved.')
                     ->setEntityName('order')
                     ->setStatus(Order::STATE_PROCESSING);
                 $this->historyRepository->save($history);
@@ -203,7 +203,7 @@ class Receiver extends Action implements CsrfAwareActionInterface
                 break;
             case 3:
                 $history = $this->historyFactory->create();
-                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request denied.')
+                $history->setParentId($decodedResponse['OrderID'])->setComment('Credius credit request denied.')
                     ->setEntityName('order')
                     ->setStatus(Order::STATE_CANCELED);
                 $this->historyRepository->save($history);
@@ -228,7 +228,7 @@ class Receiver extends Action implements CsrfAwareActionInterface
 
                 $this->orderRepository->save($this->order);
                 $history = $this->historyFactory->create();
-                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request completed.')
+                $history->setParentId($decodedResponse['OrderID'])->setComment('Credius credit request completed.')
                     ->setEntityName('order')
                     ->setStatus(Order::STATE_COMPLETE);
                 $this->historyRepository->save($history);
@@ -239,7 +239,7 @@ class Receiver extends Action implements CsrfAwareActionInterface
                 break;
             case 5:
                 $history = $this->historyFactory->create();
-                $history->setParentId($decodedResponse['OrderId'])->setComment('Credius credit request canceled by the client.')
+                $history->setParentId($decodedResponse['OrderID'])->setComment('Credius credit request canceled by the client.')
                     ->setEntityName('order')
                     ->setStatus(Order::STATE_CANCELED);
                 $this->historyRepository->save($history);
