@@ -14,19 +14,13 @@
     }
   ],
   "require": {
-    "php": ">=7.2.0",
-    "magento/framework": "~100.0.4"
+    "php": ">=7.0.0",
+    "magento/framework": "~100.0.1"
   },
   "autoload": {
     "files": [ "registration.php" ],
     "psr-4": {
       "Credius\\PaymentGateway\\": ""
     }
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/alexneamtu/credius-magento-2"
-    }
-  ]
+  }
 }
