@@ -29,7 +29,7 @@ class ConfigChange implements ObserverInterface
     /**
      * @var string
      */
-    private string $apiKey;
+    private $apiKey;
 
     /**
      * @var WriterInterface
