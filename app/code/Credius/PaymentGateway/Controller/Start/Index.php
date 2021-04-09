@@ -132,9 +132,6 @@ class Index implements ActionInterface
             ],
             'RequestGoods' => $products,
             'callback_return_url' => $this->_url->getUrl('checkout/onepage/success'),
-//            'callback_return_url_success' => $this->_url->getUrl('checkout/onepage/success'),
-//            'callback_return_url_rejected' => $this->_url->getUrl('checkout/cart'),
-
         ];
 
         $result = $this->resultJsonFactory->create();

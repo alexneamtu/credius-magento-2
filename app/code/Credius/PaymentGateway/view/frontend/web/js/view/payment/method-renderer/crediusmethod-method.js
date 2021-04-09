@@ -24,6 +24,7 @@ define(
             redirectAfterPlaceOrder: false,
             defaults: {
                 template: 'Credius_PaymentGateway/payment/crediusmethod',
+                paymentTitles: 'Credius PAY',
                 applicantTypes: '',
                 loanTypes: '',
                 requestTypes: '',
@@ -107,6 +108,9 @@ define(
 				];
 				return custom_image;
 			},
+            getPaymentTitle: function() {
+                return window.checkoutConfig.payment.crediusmethod.paymentTitles;
+            },
             getCode: function() {
                 return 'crediusmethod';
             },
@@ -120,14 +124,15 @@ define(
                 return this.applicantTypes();
             },
             initObservable: function () {
-
                 this._super()
                     .observe([
                         'applicantTypes',
                         'loanTypes',
                         'requestTypes',
-                        'requestSourceTypes'
+                        'requestSourceTypes',
+                        'paymentTitles'
                     ]);
+
                 return this;
             },
             getData: function() {
@@ -137,7 +142,8 @@ define(
                         'applicantTypes': this.applicantTypes(),
                         'loanTypes': this.loanTypes(),
                         'requestTypes': this.requestTypes(),
-                        'requestSourceTypes': this.requestSourceTypes()
+                        'requestSourceTypes': this.requestSourceTypes(),
+                        'paymentTitles': this.paymentTitles(),
                     }
                 };
             },
@@ -172,7 +178,7 @@ define(
                         'request_source_type': value
                     }
                 });
-            }
+            },
         });
     }
 );
