@@ -22,5 +22,11 @@
     "psr-4": {
       "Credius\\PaymentGateway\\": ""
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/alexneamtu/credius-magento-2"
+    }
+  ]
 }
