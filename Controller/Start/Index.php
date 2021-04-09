@@ -12,7 +12,6 @@ namespace Credius\PaymentGateway\Controller\Start;
 
 use Magento\Catalog\Api\ProductRepositoryInterfaceFactory;
 use Magento\Checkout\Model\Session;
-use Magento\Checkout\Model\Session\Proxy;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -32,34 +31,37 @@ class Index implements ActionInterface
     /**
      * @var Session
      */
-    private Session $checkoutSession;
+    private $checkoutSession;
+
     /**
      * @var JsonFactory
      */
-    private JsonFactory $resultJsonFactory;
+    private $resultJsonFactory;
+
     /**
      * @var ScopeConfigInterface
      */
-    private ScopeConfigInterface $scopeConfig;
+    private $scopeConfig;
+
     /**
      * @var ProductRepositoryInterfaceFactory
      */
-    protected ProductRepositoryInterfaceFactory $productRepositoryFactory;
+    protected $productRepositoryFactory;
 
     /**
      * @var StoreManagerInterface
      */
-    protected StoreManagerInterface $storeManagerInterface;
+    protected $storeManagerInterface;
 
     /**
      * @var UrlInterface
      */
-    private UrlInterface $_url;
+    private $_url;
 
     /**
      * Index constructor.
      * @param Context $context
-     * @param Proxy $checkoutSession
+     * @param Session $checkoutSession
      * @param JsonFactory $resultJsonFactory
      * @param ScopeConfigInterface $scopeConfig
      * @param ProductRepositoryInterfaceFactory $productRepositoryFactory
@@ -67,7 +69,7 @@ class Index implements ActionInterface
      */
     public function __construct(
         Context $context,
-        Proxy $checkoutSession,
+        Session $checkoutSession,
         JsonFactory $resultJsonFactory,
         ScopeConfigInterface $scopeConfig,
         ProductRepositoryInterfaceFactory $productRepositoryFactory,

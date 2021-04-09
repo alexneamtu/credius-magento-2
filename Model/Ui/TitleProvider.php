@@ -17,14 +17,14 @@ use Magento\Store\Model\ScopeInterface;
 /**
  * Class ApplicantTypesProvider
  */
-final class TitleProvider implements ConfigProviderInterface
+class TitleProvider implements ConfigProviderInterface
 {
     const CODE = 'crediusmethod';
 
     /**
      * @var ScopeConfigInterface
      */
-    private ScopeConfigInterface $scopeConfig;
+    private $scopeConfig;
 
     /**
      * Index constructor.

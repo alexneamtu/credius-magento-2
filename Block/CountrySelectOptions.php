@@ -21,7 +21,7 @@ class CountrySelectOptions extends Field
     /**
      * @var StoreManagerInterface
      */
-    protected StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * CountrySelectOptions constructor.

@@ -19,12 +19,12 @@ class ConfigChange implements ObserverInterface
     /**
      * @var RequestInterface
      */
-    private RequestInterface $request;
+    private $request;
 
     /**
      * @var ManagerInterface
      */
-    private ManagerInterface $messageManager;
+    private $messageManager;
 
     /**
      * @var string
@@ -34,12 +34,12 @@ class ConfigChange implements ObserverInterface
     /**
      * @var WriterInterface
      */
-    private WriterInterface $configWriter;
+    private $configWriter;
 
     /**
      * @var LoggerInterface
      */
-    private LoggerInterface $logger;
+    private $logger;
 
     /**
      * ConfigChange constructor.

@@ -1,5 +1,5 @@
 {
-  "name": "credius/payment-gateway",
+  "name": "crediuspay/payment-gateway",
   "description": "Magento 2.x personal loans integration via Credius PAY.",
   "type": "magento2-module",
   "version": "2.0.0",
@@ -7,8 +7,14 @@
     "OSL-3.0",
     "AFL-3.0"
   ],
+  "authors": [
+    {
+      "name": "Alex Neamtu",
+      "email": "alexneamtu@gmail.com"
+    }
+  ],
   "require": {
-    "php": "~7.2.0||~7.3.0",
+    "php": ">=7.2.0",
     "magento/framework": "~100.0.4"
   },
   "autoload": {

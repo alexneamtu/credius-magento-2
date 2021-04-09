@@ -153,16 +153,16 @@ class Receiver extends Action implements CsrfAwareActionInterface
                 !isset($decodedResponse['StatusID'])
             ) {
                 $this->logger->critical('Credius - Invalid notification format: ' . $response);
-                echo "1";
-                exit();
+                $this->getResponse()->setBody(1);
+                return;
             }
         }
 
         $order = $this->getOrder($decodedResponse['OrderID']);
         if (!$order) {
             $this->logger->critical('Credius - Invalid notification with orderId: ' . $decodedResponse['OrderID']);
-            echo "2";
-            exit();
+            $this->getResponse()->setBody(2);
+            return;
         }
 
         switch ($decodedResponse['StatusID']) {

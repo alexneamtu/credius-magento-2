@@ -13,9 +13,9 @@ namespace Credius\PaymentGateway\Model\Ui;
 use Magento\Checkout\Model\ConfigProviderInterface;
 
 /**
- * Class LoanTypesProvider
+ * Class ApplicantTypesProvider
  */
-final class LoanTypesProvider implements ConfigProviderInterface
+class ApplicantTypesProvider implements ConfigProviderInterface
 {
     const CODE = 'crediusmethod';
 
@@ -26,14 +26,14 @@ final class LoanTypesProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $loanTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetLoanTypes');
-        $loanTypes = json_decode($loanTypesResponse);
+        $applicantTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetApplicantTypes');
+        $applicantTypes = json_decode($applicantTypesResponse);
         $result = [];
-        foreach ($loanTypes as $value) {
+        foreach ($applicantTypes as $value) {
             $result[$value->Id] = $value->Name;
         }
         return [
-            'payment' => [self::CODE => ['loanTypes' => $result]]
+            'payment' => [self::CODE => ['applicantTypes' => $result]]
         ];
     }
 }

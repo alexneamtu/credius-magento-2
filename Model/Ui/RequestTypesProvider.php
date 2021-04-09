@@ -13,9 +13,9 @@ namespace Credius\PaymentGateway\Model\Ui;
 use Magento\Checkout\Model\ConfigProviderInterface;
 
 /**
- * Class RequestSourceTypesProvider
+ * Class RequestTypesProvider
  */
-final class RequestSourceTypesProvider implements ConfigProviderInterface
+class RequestTypesProvider implements ConfigProviderInterface
 {
     const CODE = 'crediusmethod';
 
@@ -26,14 +26,16 @@ final class RequestSourceTypesProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $requestSourceTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetRequestSourceTypes');
-        $requestSourceTypes = json_decode($requestSourceTypesResponse);
+        $requestTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetRequestTypes');
+        $requestTypes = json_decode($requestTypesResponse);
         $result = [];
-        foreach ($requestSourceTypes as $value) {
-            $result[$value->Id] = $value->Name;
+        foreach ($requestTypes as $value) {
+            if (!str_contains($value->Name, '[NOT IMPLEMENTED]')) {
+                $result[$value->Id] = $value->Name;
+            }
         }
         return [
-            'payment' => [self::CODE => ['requestSourceTypes' => $result]]
+            'payment' => [self::CODE => ['requestTypes' => $result]]
         ];
     }
 }
