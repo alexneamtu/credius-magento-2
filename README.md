@@ -11,7 +11,7 @@
 
 #  Configuration
 
-1. Upload files to your Magento 2.x installation root.
+1. Upload files to your Magento 2.x installation, inside app/code/Credius/PaymentGateway.
 
 2. Run the following commands to install module:
 ```bash
