@@ -147,6 +147,8 @@ class Receiver extends Action implements CsrfAwareActionInterface
                 parse_str($response, $decodedResponse);
             }
 
+            $this->logger->debug(print_r($decodedResponse, 1));
+
             if (
                 !is_array($decodedResponse) ||
                 !isset($decodedResponse['OrderID']) ||
