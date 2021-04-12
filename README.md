@@ -9,11 +9,19 @@
   You're going to need the Partner Code, API Key and Public Key from [Credius](https://www.credius.ro/).
   
 
-#  Configuration
+#  Installation
 
-1. Upload files to your Magento 2.x installation, inside app/code/Credius/PaymentGateway.
+## Manual installation
 
-2. Run the following commands to install module:
+Upload files to your Magento 2.x installation, inside the app/code/Credius/PaymentGateway folder.
+
+## Composer installation
+
+Inside the Magento 2.x root run `composer require crediuspay/payment-gateway`
+
+## Activation of the module
+
+Run the following after the installation:
 ```bash
     bin/magento module:enable Credius_PaymentGateway --clear-static-content
  
@@ -25,14 +33,18 @@
  
     bin/magento cache:clean 
 ```
-3. Go to your Magento dashboard. 
+
+## Setup
+
+- Go to your Magento dashboard. 
 
     -> Stores     
     -> Configuration     
     -> Sales    
     -> Payment Methods
 
-4. Find Credius & setup the plugin using the API Key provided by Credius and the Callback Url as `<domain>/credius/webhook/receiver`
+
+- Find Credius & setup the plugin using the API Key provided by Credius and the Callback Url as `<domain>/credius/webhook/receiver`
 
 #  Support
 
