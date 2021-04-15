@@ -26,7 +26,7 @@ class Index implements ActionInterface
     /**
      * @var string
      */
-    private const INITIATE_URL = 'https://testpartener.credius.ro';
+    private const INITIATE_URL = 'https://collector.credius.ro';
 
     /**
      * @var Session

@@ -26,7 +26,7 @@ class ApplicantTypesProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $applicantTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetApplicantTypes');
+        $applicantTypesResponse = file_get_contents('https://apigw.credius.ro/dictionaries/GetApplicantTypes');
         $applicantTypes = json_decode($applicantTypesResponse);
         $result = [];
         foreach ($applicantTypes as $value) {

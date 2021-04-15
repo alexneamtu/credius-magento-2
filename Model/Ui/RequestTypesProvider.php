@@ -26,7 +26,7 @@ class RequestTypesProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $requestTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetRequestTypes');
+        $requestTypesResponse = file_get_contents('https://apigw.credius.ro/dictionaries/GetRequestTypes');
         $requestTypes = json_decode($requestTypesResponse);
         $result = [];
         foreach ($requestTypes as $value) {

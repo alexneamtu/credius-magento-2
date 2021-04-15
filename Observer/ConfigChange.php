@@ -14,7 +14,7 @@ class ConfigChange implements ObserverInterface
     /**
      * @var string
      */
-    private const REGISTRATION_URL = 'https://apigw.credius.ro/dev_externalpartner/SetClientInfos';
+    private const REGISTRATION_URL = 'https://apigw.credius.ro/externalpartner/SetClientInfos';
 
     /**
      * @var RequestInterface

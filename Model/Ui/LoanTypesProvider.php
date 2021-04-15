@@ -26,7 +26,7 @@ class LoanTypesProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $loanTypesResponse = file_get_contents('https://apigw.credius.ro/dev_dictionaries/GetLoanTypes');
+        $loanTypesResponse = file_get_contents('https://apigw.credius.ro/dictionaries/GetLoanTypes');
         $loanTypes = json_decode($loanTypesResponse);
         $result = [];
         foreach ($loanTypes as $value) {

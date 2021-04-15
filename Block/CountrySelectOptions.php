@@ -102,7 +102,7 @@ class CountrySelectOptions extends Field
 
                     function init() {
                         getDictionaryValues(
-                            "https://apigw.credius.ro/dev_dictionaries/GetCountries",
+                            "https://apigw.credius.ro/dictionaries/GetCountries",
                             countryElement,
                             countryValue,
                             false,
@@ -111,7 +111,7 @@ class CountrySelectOptions extends Field
 
                         if (countryValue){
                             getDictionaryValues(
-                                "https://apigw.credius.ro/dev_dictionaries/GetDistricts/" + countryValue,
+                                "https://apigw.credius.ro/dictionaries/GetDistricts/" + countryValue,
                                 districtElement,
                                 districtValue,
                                 false,
@@ -121,7 +121,7 @@ class CountrySelectOptions extends Field
 
                         if (districtValue){
                             getDictionaryValues(
-                                "https://apigw.credius.ro/dev_dictionaries/GetLocalities/" + districtValue,
+                                "https://apigw.credius.ro/dictionaries/GetLocalities/" + districtValue,
                                 cityElement,
                                 cityValue,
                                 false,
@@ -131,7 +131,7 @@ class CountrySelectOptions extends Field
 
                         if (cityValue){
                             getDictionaryValues(
-                                "https://apigw.credius.ro/dev_dictionaries/GetStreets/" + cityValue,
+                                "https://apigw.credius.ro/dictionaries/GetStreets/" + cityValue,
                                 streetElement,
                                 streetValue,
                                 false,
@@ -146,7 +146,7 @@ class CountrySelectOptions extends Field
                         var selectedValue = $(this).val();
                         if (selectedValue) {
                             getDictionaryValues(
-                                "https://apigw.credius.ro/dev_dictionaries/GetDistricts/" + selectedValue,
+                                "https://apigw.credius.ro/dictionaries/GetDistricts/" + selectedValue,
                                 districtElement,
                                 selectedValue,
                                 true,
@@ -161,7 +161,7 @@ class CountrySelectOptions extends Field
                         var selectedValue = $(this).val();
                         if (selectedValue) {
                             getDictionaryValues(
-                                "https://apigw.credius.ro/dev_dictionaries/GetLocalities/" + selectedValue,
+                                "https://apigw.credius.ro/dictionaries/GetLocalities/" + selectedValue,
                                 cityElement,
                                 selectedValue,
                                 true,
@@ -176,7 +176,7 @@ class CountrySelectOptions extends Field
                         var selectedValue = $(this).val();
                         if (selectedValue) {
                             getDictionaryValues(
-                                "https://apigw.credius.ro/dev_dictionaries/GetStreets/" + selectedValue,
+                                "https://apigw.credius.ro/dictionaries/GetStreets/" + selectedValue,
                                 streetElement,
                                 selectedValue,
                                 true,
