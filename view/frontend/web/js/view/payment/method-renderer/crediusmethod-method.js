@@ -53,9 +53,9 @@ define(
                     'LoanTypeId'
                 ];
                 var selectFieldsValues = {
-                    ApplicantTypeId: this.getApplicantType(),
-                    RequestTypeId: this.getRequestType(),
-                    LoanTypeId: this.getLoanType(),
+                    // ApplicantTypeId: this.getApplicantType(),
+                    // RequestTypeId: this.getRequestType(),
+                    // LoanTypeId: this.getLoanType(),
                 };
                 $.post(custom_controller_url, 'json')
                     .done(function (response) {
