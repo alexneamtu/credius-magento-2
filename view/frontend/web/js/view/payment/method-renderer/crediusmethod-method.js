@@ -25,10 +25,10 @@ define(
             defaults: {
                 template: 'Credius_PaymentGateway/payment/crediusmethod',
                 paymentTitles: 'Credius PAY',
-                applicantTypes: '',
-                loanTypes: '',
-                requestTypes: '',
-                requestSourceTypes: ''
+                // applicantTypes: '',
+                // loanTypes: '',
+                // requestTypes: '',
+                // requestSourceTypes: ''
             },
             isDisplayMessage: ko.observable(false),
             initialize: function () {
@@ -114,22 +114,22 @@ define(
             getCode: function() {
                 return 'crediusmethod';
             },
-            getLoanType: function() {
-                return this.loanTypes();
-            },
-            getRequestType: function() {
-                return this.requestTypes();
-            },
-            getApplicantType: function() {
-                return this.applicantTypes();
-            },
+            // getLoanType: function() {
+            //     return this.loanTypes();
+            // },
+            // getRequestType: function() {
+            //     return this.requestTypes();
+            // },
+            // getApplicantType: function() {
+            //     return this.applicantTypes();
+            // },
             initObservable: function () {
                 this._super()
                     .observe([
-                        'applicantTypes',
-                        'loanTypes',
-                        'requestTypes',
-                        'requestSourceTypes',
+                        // 'applicantTypes',
+                        // 'loanTypes',
+                        // 'requestTypes',
+                        // 'requestSourceTypes',
                         'paymentTitles'
                     ]);
 
@@ -139,46 +139,46 @@ define(
                 return {
                     'method': this.item.method,
                     'additional_data': {
-                        'applicantTypes': this.applicantTypes(),
-                        'loanTypes': this.loanTypes(),
-                        'requestTypes': this.requestTypes(),
-                        'requestSourceTypes': this.requestSourceTypes(),
+                        // 'applicantTypes': this.applicantTypes(),
+                        // 'loanTypes': this.loanTypes(),
+                        // 'requestTypes': this.requestTypes(),
+                        // 'requestSourceTypes': this.requestSourceTypes(),
                         'paymentTitles': this.paymentTitles(),
                     }
                 };
             },
-            getApplicantTypes: function() {
-                return _.map(window.checkoutConfig.payment.crediusmethod.applicantTypes, function(value, key) {
-                    return {
-                        'value': key,
-                        'applicant_type': value
-                    }
-                });
-            },
-            getLoanTypes: function() {
-                return _.map(window.checkoutConfig.payment.crediusmethod.loanTypes, function(value, key) {
-                    return {
-                        'value': key,
-                        'loan_type': value
-                    }
-                });
-            },
-            getRequestTypes: function() {
-                return _.map(window.checkoutConfig.payment.crediusmethod.requestTypes, function(value, key) {
-                    return {
-                        'value': key,
-                        'request_type': value
-                    }
-                });
-            },
-            getRequestSourceTypes: function() {
-                return _.map(window.checkoutConfig.payment.crediusmethod.requestSourceTypes, function(value, key) {
-                    return {
-                        'value': key,
-                        'request_source_type': value
-                    }
-                });
-            },
+            // getApplicantTypes: function() {
+            //     return _.map(window.checkoutConfig.payment.crediusmethod.applicantTypes, function(value, key) {
+            //         return {
+            //             'value': key,
+            //             'applicant_type': value
+            //         }
+            //     });
+            // },
+            // getLoanTypes: function() {
+            //     return _.map(window.checkoutConfig.payment.crediusmethod.loanTypes, function(value, key) {
+            //         return {
+            //             'value': key,
+            //             'loan_type': value
+            //         }
+            //     });
+            // },
+            // getRequestTypes: function() {
+            //     return _.map(window.checkoutConfig.payment.crediusmethod.requestTypes, function(value, key) {
+            //         return {
+            //             'value': key,
+            //             'request_type': value
+            //         }
+            //     });
+            // },
+            // getRequestSourceTypes: function() {
+            //     return _.map(window.checkoutConfig.payment.crediusmethod.requestSourceTypes, function(value, key) {
+            //         return {
+            //             'value': key,
+            //             'request_source_type': value
+            //         }
+            //     });
+            // },
         });
     }
 );

@@ -28,54 +28,54 @@
             <span data-bind="i18n: 'Aceasta metoda de plata functioneaza pentru sume cuprinse intre 200RON si 20.000RON.'"></span>
         </div>
         <!-- /ko -->
-        <div class="field required">
-            <label data-bind="attr: {for: getCode() + '_applicant_types'}" class="label">
-                <span><!-- ko i18n: 'Applicant Type'--><!-- /ko --></span>
-            </label>
+<!--        <div class="field required">-->
+<!--            <label data-bind="attr: {for: getCode() + '_applicant_types'}" class="label">-->
+<!--                <span>&lt;!&ndash; ko i18n: 'Applicant Type'&ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;</span>-->
+<!--            </label>-->
 
-            <div class="control">
-                <select name="payment[applicant_types]"
-                        class="select"
-                        data-bind="
-                                  options: getApplicantTypes(),
-                                  optionsValue: 'value',
-                                  optionsText: 'applicant_type',
-                                  value: applicantTypes">
-                </select>
-            </div>
-        </div>
-        <div class="field required">
-            <label data-bind="attr: {for: getCode() + '_loan_types'}" class="label">
-                <span><!-- ko i18n: 'Loan Type'--><!-- /ko --></span>
-            </label>
+<!--            <div class="control">-->
+<!--                <select name="payment[applicant_types]"-->
+<!--                        class="select"-->
+<!--                        data-bind="-->
+<!--                                  options: getApplicantTypes(),-->
+<!--                                  optionsValue: 'value',-->
+<!--                                  optionsText: 'applicant_type',-->
+<!--                                  value: applicantTypes">-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="field required">-->
+<!--            <label data-bind="attr: {for: getCode() + '_loan_types'}" class="label">-->
+<!--                <span>&lt;!&ndash; ko i18n: 'Loan Type'&ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;</span>-->
+<!--            </label>-->
 
-            <div class="control">
-                <select name="payment[loan_types]"
-                        class="select"
-                        data-bind="
-                                  options: getLoanTypes(),
-                                  optionsValue: 'value',
-                                  optionsText: 'loan_type',
-                                  value: loanTypes">
-                </select>
-            </div>
-        </div>
-        <div class="field required">
-            <label data-bind="attr: {for: getCode() + '_request_types'}" class="label">
-                <span><!-- ko i18n: 'Request Type'--><!-- /ko --></span>
-            </label>
+<!--            <div class="control">-->
+<!--                <select name="payment[loan_types]"-->
+<!--                        class="select"-->
+<!--                        data-bind="-->
+<!--                                  options: getLoanTypes(),-->
+<!--                                  optionsValue: 'value',-->
+<!--                                  optionsText: 'loan_type',-->
+<!--                                  value: loanTypes">-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="field required">-->
+<!--            <label data-bind="attr: {for: getCode() + '_request_types'}" class="label">-->
+<!--                <span>&lt;!&ndash; ko i18n: 'Request Type'&ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;</span>-->
+<!--            </label>-->
 
-            <div class="control">
-                <select name="payment[request_types]"
-                        class="select"
-                        data-bind="
-                                  options: getRequestTypes(),
-                                  optionsValue: 'value',
-                                  optionsText: 'request_type',
-                                  value: requestTypes">
-                </select>
-            </div>
-        </div>
+<!--            <div class="control">-->
+<!--                <select name="payment[request_types]"-->
+<!--                        class="select"-->
+<!--                        data-bind="-->
+<!--                                  options: getRequestTypes(),-->
+<!--                                  optionsValue: 'value',-->
+<!--                                  optionsText: 'request_type',-->
+<!--                                  value: requestTypes">-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
 <!--        <div class="field required">-->
 <!--            <label data-bind="attr: {for: getCode() + '_request_source_types'}" class="label">-->
 <!--                <span>&lt;!&ndash; ko i18n: 'Request Source Type'&ndash;&gt;&lt;!&ndash; /ko &ndash;&gt;</span>-->
