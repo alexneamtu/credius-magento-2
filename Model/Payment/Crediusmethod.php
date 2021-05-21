@@ -24,83 +24,83 @@ class Crediusmethod extends AbstractMethod
     ) {
         $apiKey = $this->_scopeConfig->getValue(
             'payment/crediusmethod/api_settings/api_key',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $callbackUrl = $this->_scopeConfig->getValue(
             'payment/crediusmethod/api_settings/callback_url',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $storeId = $this->_scopeConfig->getValue(
             'payment/crediusmethod/store_settings/store_id',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $storeCui = $this->_scopeConfig->getValue(
             'payment/crediusmethod/store_settings/store_cui',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationId = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_id',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationName = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_name',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationCountry = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_country',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationDistrict = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_district',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationCity = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_city',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationStreet = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_street',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationStreetNumber = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_street_number',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationBuildingNumber = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_building_number',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationStairNumber = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_stair_number',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationFloorNumber = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_floor_number',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $locationApartmanetNumber = $this->_scopeConfig->getValue(
             'payment/crediusmethod/location_settings/location_apartment_number',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $userId = $this->_scopeConfig->getValue(
             'payment/crediusmethod/user_settings/user_id',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $userCnp = $this->_scopeConfig->getValue(
             'payment/crediusmethod/user_settings/user_cnp',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $userFirstName = $this->_scopeConfig->getValue(
             'payment/crediusmethod/user_settings/user_first_name',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $userLastName = $this->_scopeConfig->getValue(
             'payment/crediusmethod/user_settings/user_last_name',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
         $userIdentityCard = $this->_scopeConfig->getValue(
             'payment/crediusmethod/user_settings/user_identity_card',
-            ScopeInterface::SCOPE_WEBSITE
+            ScopeInterface::SCOPE_DEFAULT
         );
 
 

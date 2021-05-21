@@ -87,10 +87,10 @@ class Index implements ActionInterface
      */
     public function execute(): Json
     {
-        $apiKey = $this->scopeConfig->getValue('payment/crediusmethod/api_settings/api_key', ScopeInterface::SCOPE_WEBSITE);
-        $storeId = $this->scopeConfig->getValue('payment/crediusmethod/store_settings/store_id', ScopeInterface::SCOPE_WEBSITE);
-        $locationId = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_id', ScopeInterface::SCOPE_WEBSITE);
-        $userId = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_id', ScopeInterface::SCOPE_WEBSITE);
+        $apiKey = $this->scopeConfig->getValue('payment/crediusmethod/api_settings/api_key', ScopeInterface::SCOPE_DEFAULT);
+        $storeId = $this->scopeConfig->getValue('payment/crediusmethod/store_settings/store_id', ScopeInterface::SCOPE_DEFAULT);
+        $locationId = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_id', ScopeInterface::SCOPE_DEFAULT);
+        $userId = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_id', ScopeInterface::SCOPE_DEFAULT);
 
         $order = $this->checkoutSession->getLastRealOrder();
 
