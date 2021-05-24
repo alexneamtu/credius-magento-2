@@ -43,10 +43,7 @@ class TitleProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        $title = $this->scopeConfig->getValue(
-            'payment/crediusmethod/general_settings/title',
-            ScopeInterface::SCOPE_DEFAULT
-        );
+        $title = $this->scopeConfig->getValue('payment/crediusmethod/general_settings/title');
 
         return [
             'payment' => [self::CODE => ['paymentTitles' => $title]]
