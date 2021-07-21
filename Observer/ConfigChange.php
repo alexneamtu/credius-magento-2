@@ -8,6 +8,8 @@ use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Message\ManagerInterface;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+
 
 class ConfigChange implements ObserverInterface
 {
@@ -37,6 +39,11 @@ class ConfigChange implements ObserverInterface
     private $configWriter;
 
     /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -46,17 +53,20 @@ class ConfigChange implements ObserverInterface
      * @param RequestInterface $request
      * @param WriterInterface $configWriter
      * @param ManagerInterface $messageManager
+     * @param ScopeConfigInterface $scopeConfig
      * @param LoggerInterface $logger
      */
     public function __construct(
         RequestInterface $request,
         WriterInterface $configWriter,
         ManagerInterface $messageManager,
+        ScopeConfigInterface $scopeConfig,
         LoggerInterface $logger
     ) {
         $this->request = $request;
         $this->configWriter = $configWriter;
         $this->messageManager = $messageManager;
+        $this->scopeConfig = $scopeConfig;
         $this->logger = $logger;
     }
 
@@ -125,16 +135,6 @@ class ConfigChange implements ObserverInterface
         $userLastName,
         $userIdentityCard
     ) {
-        error_log(print_r([
-            'DataType' => 4,
-            'StoreId' => $storeId,
-            'LocationId' => $locationId,
-            'UserId' => $userId,
-            'UserCNP' => $userCnp,
-            'UserFirstName' => $userFirstName,
-            'UseLastName' => $userLastName,
-            'UserIdentityCard' => $userIdentityCard,
-        ], 1));
         $response = $this->getResponse([
             'DataType' => 4,
             'StoreId' => $storeId,
@@ -153,34 +153,35 @@ class ConfigChange implements ObserverInterface
         }
     }
 
+
     public function execute(EventObserver $observer): void
     {
         $params = $this->request->getParam('groups');
+        
+        $this->apiKey = $this->scopeConfig->getValue('payment/crediusmethod/api_settings/api_key');
+        $callbackUrl = $this->scopeConfig->getValue('payment/crediusmethod/api_settings/callback_url');
 
-        $this->apiKey = $params['crediusmethod']['groups']['api_settings']['fields']['api_key']['value'];
-        $callbackUrl = $params['crediusmethod']['groups']['api_settings']['fields']['callback_url']['value'];
+        $storeId = $this->scopeConfig->getValue('payment/crediusmethod/store_settings/store_id');
+        $storeCui = $this->scopeConfig->getValue('payment/crediusmethod/store_settings/store_cui');
 
-        $storeId = $params['crediusmethod']['groups']['store_settings']['fields']['store_id']['value'];
-        $storeCui = $params['crediusmethod']['groups']['store_settings']['fields']['store_cui']['value'];
+        $locationId = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_id');
+        $locationName = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_name');
+        $locationCountry = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_country');
+        $locationDistrict = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_district');
+        $locationCity =$this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_city');
+        $locationStreet = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_street');
+        $locationStreetNumber = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_street_number');
+        $locationBuildingNumber = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_building_number');
+        $locationStairNumber = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_stair_number');
+        $locationFloorNumber = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_floor_number');
+        $locationApartmentNumber = $this->scopeConfig->getValue('payment/crediusmethod/location_settings/location_apartment_number'); 
 
-        $locationId = $params['crediusmethod']['groups']['location_settings']['fields']['location_id']['value'];
-        $locationName = $params['crediusmethod']['groups']['location_settings']['fields']['location_name']['value'];
-        $locationCountry = $params['crediusmethod']['groups']['location_settings']['fields']['location_country']['value'];
-        $locationDistrict = $params['crediusmethod']['groups']['location_settings']['fields']['location_district']['value'];
-        $locationCity = $params['crediusmethod']['groups']['location_settings']['fields']['location_city']['value'];
-        $locationStreet = $params['crediusmethod']['groups']['location_settings']['fields']['location_street']['value'];
-        $locationStreetNumber = $params['crediusmethod']['groups']['location_settings']['fields']['location_street_number']['value'];
-        $locationBuildingNumber = $params['crediusmethod']['groups']['location_settings']['fields']['location_building_number']['value'];
-        $locationStairNumber = $params['crediusmethod']['groups']['location_settings']['fields']['location_stair_number']['value'];
-        $locationFloorNumber = $params['crediusmethod']['groups']['location_settings']['fields']['location_floor_number']['value'];
-        $locationApartmentNumber = $params['crediusmethod']['groups']['location_settings']['fields']['location_apartment_number']['value'];
-
-        $userId = $params['crediusmethod']['groups']['user_settings']['fields']['user_id']['value'];
-        $userCnp = $params['crediusmethod']['groups']['user_settings']['fields']['user_cnp']['value'];
-        $userFirstName = $params['crediusmethod']['groups']['user_settings']['fields']['user_first_name']['value'];
-        $userLastName = $params['crediusmethod']['groups']['user_settings']['fields']['user_last_name']['value'];
-        $userIdentityCard = $params['crediusmethod']['groups']['user_settings']['fields']['user_identity_card']['value'];
-
+        $userId = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_id'); 
+        $userCnp = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_cnp'); 
+        $userFirstName = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_first_name'); 
+        $userLastName = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_last_name'); 
+        $userIdentityCard = $this->scopeConfig->getValue('payment/crediusmethod/user_settings/user_identity_card'); 
+    
         $this->registerCallback($callbackUrl);
         $this->registerStore($storeId, $storeCui);
         $this->registerLocation(
@@ -220,6 +221,7 @@ class ConfigChange implements ObserverInterface
             'ApiKey: ' . $this->apiKey,
             'Content-length: ' . strlen($fields),
         ];
+        error_log(print_r($headers, 1));
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, self::REGISTRATION_URL);
