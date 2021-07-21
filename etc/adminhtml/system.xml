@@ -33,93 +33,93 @@
                 </group>
                 <group id="api_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="2000" translate="label">
                     <label>API Settings</label>
-                    <field id="api_key" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="api_key" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>API Key</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="callback_url" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="callback_url" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Callback Url</label>
                         <validate>required-entry validate-url</validate>
                     </field>
                 </group>
                 <group id="store_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="3000" translate="label">
                     <label>Store Settings</label>
-                    <field id="store_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="store_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>ID</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="store_cui" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="store_cui" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>CUI</label>
                         <validate>required-entry</validate>
                     </field>
                 </group>
                 <group id="location_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="4000" translate="label">
                     <label>Location Settings</label>
-                    <field id="location_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>ID</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Name</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_country" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_country" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Country</label>
                         <validate>required-entry</validate>
                         <frontend_model>Credius\PaymentGateway\Block\CountrySelectOptions</frontend_model>
                     </field>
-                    <field id="location_district" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_district" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>District</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_city" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_city" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>City</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_street" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_street" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Street</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_street_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_street_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Street Number</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_building_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_building_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Building Number</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_stair_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_stair_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Stair Number</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_floor_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_floor_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Floor Number</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="location_apartment_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="location_apartment_number" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Apartment Number</label>
                         <validate>required-entry</validate>
                     </field>
                 </group>
                 <group id="user_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5000" translate="label">
                     <label>User Settings</label>
-                    <field id="user_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="user_id" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>ID</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="user_cnp" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="user_cnp" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>CNP</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="user_first_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="user_first_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>First Name</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="user_last_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="user_last_name" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Last Name</label>
                         <validate>required-entry</validate>
                     </field>
-                    <field id="user_identity_card" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <field id="user_identity_card" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Identity Card</label>
                         <validate>required-entry</validate>
                     </field>
